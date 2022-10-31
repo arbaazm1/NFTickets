@@ -8,16 +8,28 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
+import Artists from './components/Artists';
+import Fans from './components/Fans';
 import SellNFT from './components/SellNFT';
 import Marketplace from './components/Marketplace';
 import Profile from './components/Profile';
 import NFTPage from './components/NFTpage';
+import PrimaryBuy from './components/PrimaryBuy';
+import SecondaryBuy from './components/SecondaryBuy';
+import ArtistAccount from './components/ArtistAccount';
+import ArtistListingPage from './components/ArtistListingPage';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
+        <Route path="/artists" element={<Artists />}/>
+        <Route path="/fans" element={<Fans />}/>
+        <Route path="/primaryBuy" element={<PrimaryBuy />}/>
+        <Route path="/secondaryBuy" element={<SecondaryBuy />}/>
+        <Route path="/artistAccount" element={<ArtistAccount />}/>
+        <Route path="/artistListingPage" element={<ArtistListingPage />}/>
         <Route path="/" element={<Marketplace />}/>
         <Route path="/sellNFT" element={<SellNFT />}/> 
         <Route path="/nftPage/:tokenId" element={<NFTPage />}/>        
