@@ -1,7 +1,7 @@
 import Navbar from './Navbar'
 import { useState } from 'react'
 import { uploadFileToIPFS, uploadJSONToIPFS } from '../pinata'
-import Marketplace from '../Marketplace.json'
+import Factory from '../Factory.json'
 import { useLocation } from 'react-router'
 
 export default function ArtistListingPage() {
@@ -82,6 +82,108 @@ export default function ArtistListingPage() {
         ...formParams.tierData.slice(index + 1, formParams.tierData.length),
       ],
     })
+  }
+
+  async function createCollection(e) {
+    e.preventDefault()
+
+    try {
+      // TODO: Implement upload file to ipfs
+      // const metadataURL = await uploadMetadataToIPFS()
+      //After adding your Hardhat network to your metamask, this code will get providers and signers
+      const provider = new ethers.providers.Web3Provider(window.ethereum)
+      const signer = provider.getSigner()
+      // updateMessage('Please wait.. uploading (upto 5 mins)')
+
+      //Pull the deployed contract instance
+      let contract = new ethers.Contract(Factory.address, Factory.abi, signer)
+
+      //actually create the NFT
+      let mockURI =
+        'https://i.natgeofe.com/n/548467d8-c5f1-4551-9f58-6817a8d2c45e/NationalGeographic_2572187_square.jpg'
+      console.log(formParams.time)
+      let transaction = await contract.createCollection(
+        formParams.name,
+        Math.floor(new Date(formParams.time).getTime() / 1000),
+        formParams.location,
+        formParams.tokenSymbol,
+        50,
+        mockURI,
+        formParams.tier,
+        formParams.tierData.map((x) => x.maxTicketPerTier),
+        formParams.tierData.map((x) => x.priceTicketPerTier),
+        formParams.tierData.map((x) => mockURI),
+      )
+      // let transaction = await contract.createCollection(formParams.name, formParams.time, formParams.location, formParams.tokenSymbol, 50, mockURI, formParams.tier, formParams.tierData.map(x => x.maxTicketPerTier), formParams.tierData.map(x => x.priceTicketPerTier), formParams.tierData.map(x => x.imageURLPerTier))
+      await transaction.wait()
+
+      alert('Successfully listed your ticket collection!')
+      updateMessage('')
+      updateFormParams({
+        name: '',
+        location: '',
+        time: '',
+        tokenSymbol: '',
+        tier: 1,
+        tierData: [
+          {
+            maxTicketPerTier: 100,
+            priceTicketPerTier: 10000,
+            imageURLPerTier: '',
+          },
+          {
+            maxTicketPerTier: 100,
+            priceTicketPerTier: 10000,
+            imageURLPerTier: '',
+          },
+          {
+            maxTicketPerTier: 100,
+            priceTicketPerTier: 10000,
+            imageURLPerTier: '',
+          },
+          {
+            maxTicketPerTier: 100,
+            priceTicketPerTier: 10000,
+            imageURLPerTier: '',
+          },
+          {
+            maxTicketPerTier: 100,
+            priceTicketPerTier: 10000,
+            imageURLPerTier: '',
+          },
+          {
+            maxTicketPerTier: 100,
+            priceTicketPerTier: 10000,
+            imageURLPerTier: '',
+          },
+          {
+            maxTicketPerTier: 100,
+            priceTicketPerTier: 10000,
+            imageURLPerTier: '',
+          },
+          {
+            maxTicketPerTier: 100,
+            priceTicketPerTier: 10000,
+            imageURLPerTier: '',
+          },
+          {
+            maxTicketPerTier: 100,
+            priceTicketPerTier: 10000,
+            imageURLPerTier: '',
+          },
+          {
+            maxTicketPerTier: 100,
+            priceTicketPerTier: 10000,
+            imageURLPerTier: '',
+          },
+        ],
+        description: '',
+        price: '',
+      })
+      window.location.replace('/')
+    } catch (e) {
+      alert('Upload error' + e)
+    }
   }
 
   return (
@@ -275,7 +377,7 @@ export default function ArtistListingPage() {
             <br></br>
             <div className="text-green text-center">{message}</div>
             <button
-              onClick={''}
+              onClick={(e) => createCollection(e)}
               className="font-bold mt-10 w-full bg-purple-500 text-white rounded p-2 shadow-lg"
             >
               List NFT
