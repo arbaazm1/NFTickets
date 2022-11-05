@@ -47,7 +47,7 @@ export default function ArtistListingPage() {
         if (index == null) {
           setFileURL(response.pinataURL)
         } else {
-          onUpdateTierData(response.pinataURL, index)
+          onUpdateTierData(response.pinataURL, index, 'imageURLPerTier')
         }
       }
     } catch (e) {
@@ -97,10 +97,9 @@ export default function ArtistListingPage() {
 
       //Pull the deployed contract instance
       let contract = new ethers.Contract(Factory.address, Factory.abi, signer)
+      console.log(formParams)
 
       //actually create the NFT
-      let mockURI =
-        'https://i.natgeofe.com/n/548467d8-c5f1-4551-9f58-6817a8d2c45e/NationalGeographic_2572187_square.jpg'
       console.log(formParams.time)
       let transaction = await contract.createCollection(
         formParams.name,
@@ -108,13 +107,12 @@ export default function ArtistListingPage() {
         formParams.location,
         formParams.tokenSymbol,
         50,
-        mockURI,
+        fileURL,
         formParams.tier,
         formParams.tierData.map((x) => x.maxTicketPerTier),
         formParams.tierData.map((x) => x.priceTicketPerTier),
-        formParams.tierData.map((x) => mockURI),
+        formParams.tierData.map((x) => x.imageURLPerTier),
       )
-      // let transaction = await contract.createCollection(formParams.name, formParams.time, formParams.location, formParams.tokenSymbol, 50, mockURI, formParams.tier, formParams.tierData.map(x => x.maxTicketPerTier), formParams.tierData.map(x => x.priceTicketPerTier), formParams.tierData.map(x => x.imageURLPerTier))
       await transaction.wait()
 
       alert('Successfully listed your ticket collection!')
@@ -190,8 +188,8 @@ export default function ArtistListingPage() {
     <div className="">
       <Navbar></Navbar>
       <div className="grid grid-cols-2 bg-white shadow-md rounded mb-4 mx-10 place-items-stretch">
-        <div className="flex flex-col justify-center">
-          <div>
+        <div className="flex flex-col content-center my-10">
+          <div className="flex-col flex items-center">
             <label
               className="block text-purple-500 text-sm font-bold mb-2"
               htmlFor="image"
@@ -204,6 +202,13 @@ export default function ArtistListingPage() {
                 OnChangeFile(e, null)
               }}
             ></input>
+          </div>
+          <div className="flex-col flex items-center">
+            <img
+              src={fileURL}
+              alt=""
+              className="flex w-80 h-80 rounded-lg object-cover"
+            />
           </div>
         </div>
         <div className="flex flex-col justify-center my-10" id="nftForm">
