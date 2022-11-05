@@ -1,5 +1,5 @@
 {
-  "address": "0xC016546a6BCcfCbf03dF56F92c7609C35558b7FB",
+  "address": "0xe7eECE3919d8e8A43e8d6B569BBCe5Ef0224E2EF",
   "abi": [
     {
       "inputs": [
@@ -38,6 +38,11 @@
           "internalType": "uint8",
           "name": "protocolFee_",
           "type": "uint8"
+        },
+        {
+          "internalType": "string",
+          "name": "URI_",
+          "type": "string"
         },
         {
           "internalType": "uint8",

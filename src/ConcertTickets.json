@@ -28,6 +28,11 @@
           "type": "uint8"
         },
         {
+          "internalType": "string",
+          "name": "URI_",
+          "type": "string"
+        },
+        {
           "internalType": "uint8",
           "name": "numTier_",
           "type": "uint8"
@@ -163,6 +168,19 @@
       ],
       "name": "Transfer",
       "type": "event"
+    },
+    {
+      "inputs": [],
+      "name": "URI",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
     },
     {
       "inputs": [
