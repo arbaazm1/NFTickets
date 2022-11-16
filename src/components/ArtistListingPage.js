@@ -187,7 +187,7 @@ export default function ArtistListingPage() {
   return (
     <div className="">
       <Navbar></Navbar>
-      <div className="grid grid-cols-2 bg-white shadow-md rounded mb-4 mx-10 place-items-stretch">
+      <div className="grid grid-cols-2 shadow-md rounded mb-4 mx-10 place-items-stretch">
         <div className="flex flex-col content-center my-10">
           <div className="flex-col flex items-center">
             <label

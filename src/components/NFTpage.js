@@ -43,29 +43,6 @@ async function getNFTData(tokenId) {
     updateCurrAddress(addr);
 }
 
-async function buyNFT(tokenId) {
-    try {
-        const ethers = require("ethers");
-        //After adding your Hardhat network to your metamask, this code will get providers and signers
-        const provider = new ethers.providers.Web3Provider(window.ethereum);
-        const signer = provider.getSigner();
-
-        //Pull the deployed contract instance
-        let contract = new ethers.Contract(MarketplaceJSON.address, MarketplaceJSON.abi, signer);
-        const salePrice = ethers.utils.parseUnits(data.price, 'ether')
-        updateMessage("Buying the NFT... Please Wait (Upto 5 mins)")
-        //run the executeSale function
-        let transaction = await contract.executeSale(tokenId, {value:salePrice});
-        await transaction.wait();
-
-        alert('You successfully bought the NFT!');
-        updateMessage("");
-    }
-    catch(e) {
-        alert("Upload Error"+e)
-    }
-}
-
     const params = useParams();
     const tokenId = params.tokenId;
     if(!dataFetched)
@@ -74,34 +51,106 @@ async function buyNFT(tokenId) {
     return(
         <div style={{"min-height":"100vh"}}>
             <Navbar></Navbar>
-            <div className="flex ml-20 mt-20">
-                <img src={data.image} alt="" className="w-2/5" />
-                <div className="text-xl ml-20 space-y-8 text-white shadow-2xl rounded-lg border-2 p-5">
-                    <div>
-                        Name: {data.name}
-                    </div>
-                    <div>
-                        Description: {data.description}
-                    </div>
-                    <div>
-                        Price: <span className="">{data.price + " ETH"}</span>
-                    </div>
-                    <div>
-                        Owner: <span className="text-sm">{data.owner}</span>
-                    </div>
-                    <div>
-                        Seller: <span className="text-sm">{data.seller}</span>
-                    </div>
-                    <div>
-                    { currAddress == data.owner || currAddress == data.seller ?
-                        <button className="enableEthereumButton bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-sm" onClick={() => buyNFT(tokenId)}>Buy this NFT</button>
-                        : <div className="text-emerald-700">You are the owner of this NFT</div>
-                    }
-                    
-                    <div className="text-green text-center mt-3">{message}</div>
-                    </div>
-                </div>
+            <div className="grid grid-cols-2 shadow-md rounded mb-4 mx-10 place-items-stretch">
+        <div className="flex flex-col content-center my-10">
+          <div className="flex-col flex items-center">
+          <img
+              src="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/little-cute-maltipoo-puppy-royalty-free-image-1652926025.jpg?crop=0.444xw:1.00xh;0.129xw,0&resize=980:*"
+              alt=""
+              className="flex w-80 h-80 rounded-lg object-cover"
+            />
+          </div>
+            <div className="mb-4">
+              <label
+                className="block text-purple-500 text-sm font-bold mb-2"
+                htmlFor="name"
+              >
+                Event Name
+              </label>
             </div>
+            <div className="mb-4">
+              <label
+                className="block text-purple-500 text-sm font-bold mb-2"
+                htmlFor="location"
+              >
+                Location
+              </label>
+            </div>
+            <div className="mb-4">
+              <label
+                className="block text-purple-500 text-sm font-bold mb-2"
+                htmlFor="time"
+              >
+                Time
+              </label>
+            </div>
+            <div className="mb-4">
+              <label
+                className="block text-purple-500 text-sm font-bold mb-2"
+                htmlFor="tokenSymbol"
+              >
+                Description
+              </label>
+            </div>
+        </div>
+
+        <div className="flex flex-col justify-center my-10" id="nftForm">
+          <form>
+            <div className="mb-4">
+              <input
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="resale reason"
+                type="text"
+                placeholder="Resale details (e.g. reason for selling, seller reputation, etc.)"
+                // onChange={(e) =>
+                //   updateFormParams({ ...formParams, location: e.target.value })
+                // }
+                // value={formParams.location}
+              ></input>
+            </div>
+            <div className="mb-4">
+              <input
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="resalePrice1"
+                type="text"
+                placeholder="Resale Price"
+                // onChange={(e) =>
+                //   updateFormParams({
+                //     ...formParams,
+                //     tokenSymbol: e.target.value,
+                //   })
+                // }
+                // value={formParams.tokenSymbol}
+              ></input>
+            </div>
+            <div className="mb-4">
+              <input
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="resalePrice2"
+                type="text"
+                placeholder="Confirm resale price"
+                // onChange={(e) => {
+                //   updateFormParams({
+                //     ...formParams,
+                //     tier: Math.min(10, Math.max(e.target.value, 1)),
+                //   })
+                // }}
+                // value={formParams.tier}
+              ></input>
+            </div>
+
+            <br></br>
+            <div className="text-green text-center">{message}</div>
+            <button
+            //   onClick={(e) => createCollection(e)}
+              className="font-bold mt-10 w-full bg-purple-500 text-white rounded p-2 shadow-lg"
+            >
+              Sell
+            </button>
+          </form>
+        </div>
+      </div>
+            
         </div>
     )
 }
