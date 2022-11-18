@@ -63,6 +63,7 @@ export default function Profile() {
           1000 * (await ticketCollection.eventTime()).toNumber(),
         ).toLocaleString()
         let balance = await ticketCollection.balanceOf(curAddress)
+        let numTier = await ticketCollection.numTier()
         for (let i = 0; i < balance; i++) {
           let id = (
             await ticketCollection.tokenOfOwnerByIndex(curAddress, i)
@@ -70,7 +71,6 @@ export default function Profile() {
           let image = await ticketCollection.tokenURI(id)
           let tier = -1
           let maxSupply = 0
-          let numTier = await ticketCollection.numTier()
           let isListed = await market.isListed(address, id)
           let price = 0
           if (isListed) {
