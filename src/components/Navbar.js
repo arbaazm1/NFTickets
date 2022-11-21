@@ -94,13 +94,13 @@ function Navbar() {
               <Link to="/artists">Artists</Link>
             </li>
           )}
-          {location.pathname === '/fans' ? (
+          {location.pathname === '/events' ? (
             <li className="border-b-2 hover:pb-0 p-2">
-              <Link to="/fans">Fans</Link>
+              <Link to="/events">Events</Link>
             </li>
           ) : (
             <li className="hover:border-b-2 hover:pb-0 p-2">
-              <Link to="/fans">Fans</Link>
+              <Link to="/events">Events</Link>
             </li>
           )}
           {location.pathname === '/profile' ? (
