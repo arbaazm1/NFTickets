@@ -3,7 +3,6 @@ import { Component } from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Button from 'react-bootstrap/Col';
 import {
   Link
 } from 'react-router-dom';
@@ -104,15 +103,18 @@ class Event extends Component {
         time:"7:00pm ET", 
         directid:"9912",
         secondaryid:"11924",
-        seatmap:{seatmap}
+        seatmap: seatmap
     }]})
   }
 
     render() {
       console.log(this.state)
       return (
-        <Container fluid>
+        <div>
         <Navbar />
+        <Container fluid style={{
+          backgroundColor: 'lightgray'
+        }}>
           <Row>
           <h1>Tickets to {this.state.data.name}</h1>
         </Row>
@@ -120,11 +122,6 @@ class Event extends Component {
           <Col>
         <h2>Date: {this.state.data.date}</h2>
           <h2>Time: {this.state.data.time}</h2>
-          </Col>
-          <Col>
-            <Button>
-              <Link to="/">Go Back</Link>
-            </Button>
           </Col>
         </Row>
         
@@ -140,6 +137,7 @@ class Event extends Component {
             </Col>
           </Row>
         </Container>
+        </div>
       )
   }
 }
