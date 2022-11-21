@@ -24,6 +24,10 @@ function Navbar() {
     updateAddress(addr)
   }
 
+  function timeout(delay) {
+    return new Promise((res) => setTimeout(res, delay))
+  }
+
   function updateButton() {
     const ethereumButton = document.querySelector('.enableEthereumButton')
     ethereumButton.textContent = 'Connected'
@@ -48,9 +52,11 @@ function Navbar() {
         updateButton()
         console.log('here')
         getAddress()
-        window.location.replace(location.pathname)
+        // window.location.replace(location.pathname)
       })
   }
+
+  connectWebsite()
 
   useEffect(() => {
     let val = window.ethereum.isConnected()
@@ -61,7 +67,8 @@ function Navbar() {
       updateButton()
     }
 
-    window.ethereum.on('accountsChanged', function (accounts) {
+    window.ethereum.on('accountsChanged', async function (accounts) {
+      await timeout(1000)
       window.location.replace(location.pathname)
     })
   })

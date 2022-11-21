@@ -25,8 +25,6 @@ export default function Profile() {
     let contract = new ethers.Contract(Factory.address, Factory.abi, signer)
     // Get all of the NFT collections
     const allCollections = await contract.ticketCollections()
-    console.log(allCollections)
-    const curAddress = await signer.getAddress()
 
     const asyncFilter = async (arr, predicate) =>
       Promise.all(arr.map(predicate)).then((results) =>
@@ -41,7 +39,7 @@ export default function Profile() {
           ConcertTickets.abi,
           signer,
         )
-        let balance = await ticketCollection.balanceOf(curAddress)
+        let balance = await ticketCollection.balanceOf(addr)
         return balance > 0
       },
     )
@@ -49,7 +47,7 @@ export default function Profile() {
     const market = new ethers.Contract(Market.address, Market.abi, signer)
     let dataObjects = []
 
-    const items = await Promise.all(
+    await Promise.all(
       userCollections.map(async (address) => {
         let ticketCollection = new ethers.Contract(
           address,
@@ -62,11 +60,11 @@ export default function Profile() {
         let eventTime = new Date(
           1000 * (await ticketCollection.eventTime()).toNumber(),
         ).toLocaleString()
-        let balance = await ticketCollection.balanceOf(curAddress)
+        let balance = await ticketCollection.balanceOf(addr)
         let numTier = await ticketCollection.numTier()
         for (let i = 0; i < balance; i++) {
           let id = (
-            await ticketCollection.tokenOfOwnerByIndex(curAddress, i)
+            await ticketCollection.tokenOfOwnerByIndex(addr, i)
           ).toNumber()
           let image = await ticketCollection.tokenURI(id)
           let tier = -1
