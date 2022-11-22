@@ -36,7 +36,7 @@ class Listing extends Component {
           <td>Price: ${this.props.price}</td>
         </tr>
         <tr>
-          <td>{this.props.type} Tier</td>
+          <td>{this.props.tier} Tier</td>
         </tr>
         <tr>
           <td>
@@ -52,8 +52,6 @@ class Listing extends Component {
   }
 }
 
-
-
 class TicketListings extends Component {
   constructor(props) {
     super(props)
@@ -62,11 +60,14 @@ class TicketListings extends Component {
 
   componentDidMount() {
     // Connect to backend listings db here
+
+    // ID corresponds to tokenid
+    // Others are direct matches
     this.setState({
       data: [
-        { id: 1 , price: 100, type: "VIP", section: 200, seat: "F14" }, 
-        { id: 2 , price: 73, type: "Basic", section: 190, seat: "GG44" },  
-        { id: 3 , price: 200, type: "Premium", section: "240", seat: "ZZ90" }
+        { id: 1 , price: 100, tier: "VIP", section: 200, seat: "F14" }, 
+        { id: 2 , price: 73, tier: "Basic", section: 190, seat: "GG44" },  
+        { id: 3 , price: 200, tier: "Premium", section: "240", seat: "ZZ90" }
       ]
     })
   }
@@ -78,8 +79,10 @@ class TicketListings extends Component {
 
         {this.state.data.map(
           (listing, index) => 
+          <div className="border-2 ml-12 mt-5 mb-12 flex flex-col items-center rounded-lg w-48 md:w-72 shadow-2xl">
           <Listing key={index} 
-          id={listing.id} price={listing.price} type={listing.type} section={listing.section} seat={listing.seat} />
+          eventid={this.props.eventid} id={listing.id} price={listing.price} tier={listing.tier} section={listing.section} seat={listing.seat} />
+          </div>
         )}
       </div>
     );
@@ -90,38 +93,40 @@ class Event extends Component {
 
   constructor(props) {
     super(props)
-    this.state = { data: [] }
+    this.state = { data: {} }
   }
 
   componentDidMount() {
     // Connect to backend event info db here (the event knows its id from the URL)
     // this.props.match.params.id
     this.setState({
-      data: [{
+      data: {
         name:"Taylor Swift", 
         date:"May 14, 2023", 
         time:"7:00pm ET", 
         directid:"9912",
         secondaryid:"11924",
-        seatmap: seatmap
-    }]})
+        seatmap: seatmap,
+        symbol: "TSE",
+        location: "FedEx Field in Washington, D.C."
+    }})
   }
 
     render() {
-      console.log(this.state)
+      console.log(this.state.data)
       return (
         <div>
         <Navbar />
-        <Container fluid style={{
-          backgroundColor: 'lightgray'
-        }}>
+        <Container fluid>
           <Row>
-          <h1>Tickets to {this.state.data.name}</h1>
+          <h1>Tickets to {this.state.data.name} (SYMBOL: {this.state.data.symbol})</h1>
         </Row>
         <Row>
           <Col>
         <h2>Date: {this.state.data.date}</h2>
           <h2>Time: {this.state.data.time}</h2>
+          <h2>Location: {this.state.data.location}</h2>
+          <br />
           </Col>
         </Row>
         
