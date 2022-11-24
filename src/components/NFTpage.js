@@ -13,8 +13,8 @@ export default function NFTPage(props) {
   const [resalePrice, updateResalePrice] = useState()
   const [confirmResalePrice, updateConfirmResalePrice] = useState()
   const [currAddress, updateCurrAddress] = useState('0x')
-  const params = useParams()
-  const para = params.tokenId.split('_')
+  const params = useParams().id
+  const para = params.split('_')
   const address = para[0]
   const tokenId = para[1]
 
