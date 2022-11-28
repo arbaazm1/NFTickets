@@ -93,8 +93,6 @@ class TicketListings extends Component {
   async componentDidMount() {
     let dataFetched = []
     const ethers = require('ethers')
-    console.log('try')
-    console.log(this.props.eventAddress)
 
     const provider = new ethers.providers.Web3Provider(window.ethereum)
     const signer = provider.getSigner()

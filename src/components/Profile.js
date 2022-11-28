@@ -76,7 +76,8 @@ export default function Profile() {
             price = royaltyInfo[0].toNumber() + royaltyInfo[1].toNumber()
           }
           for (let j = 0; j < numTier; j++) {
-            maxSupply = maxSupply + (await ticketCollection.tierMaxSupply(j))
+            maxSupply =
+              maxSupply + (await ticketCollection.tierMaxSupply(j)).toNumber()
             if (maxSupply > id) {
               tier = j
               break

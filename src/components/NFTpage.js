@@ -113,6 +113,10 @@ export default function NFTPage(props) {
 
       //Pull the deployed contract instance
       let market = new ethers.Contract(Market.address, Market.abi, signer)
+      let contract = new ethers.Contract(address, ConcertTickets.abi, signer)
+
+      let approveTxn = await contract.approve(Market.address, tokenId)
+      await approveTxn.wait()
 
       let transaction = await market.secondaryList(
         address,
