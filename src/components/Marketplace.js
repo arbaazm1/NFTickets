@@ -3,6 +3,9 @@ import NFTTile from "./NFTTile";
 import MarketplaceJSON from "../Marketplace.json";
 import axios from "axios";
 import { useState } from "react";
+import background from "./images/BlurredCrowd.jpg";
+import logo from "./images/Nifty.png"
+
 
 export default function Marketplace() {
 const sampleData = [
@@ -73,20 +76,58 @@ async function getAllNFTs() {
 if(!dataFetched)
     getAllNFTs();
 
+const myStyle={
+    backgroundImage: `url(${background})`,
+    height:'100vh',
+    width:'215.25vh',
+    fontSize:'50px',
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+    
+    };
+
+    function goToFanPage() {
+        window.location.replace("/events");
+    }
+
+    function goToOrganizerPage() {
+        window.location.replace("/artists");
+    }
+
 return (
-    <div>
-        <Navbar></Navbar>
-        <div className="flex flex-col place-items-center mt-20">
-            <div className="md:text-xl font-bold text-white">
-                Top NFTs
-            </div>
-            <div className="flex mt-5 justify-between flex-wrap max-w-screen-xl text-center">
-                {data.map((value, index) => {
-                    return <NFTTile data={value} key={index}></NFTTile>;
-                })}
-            </div>
-        </div>            
+    <>
+    <div style={myStyle}>
+    <img src={logo} alt="Nifty Logo" 
+      height = {118}
+      width = {827}
+      style = {{position: "relative", left:"380px", top:"220px", alignSelf: "center"}}
+      />
+    <button style = {{
+      position: "relative",
+      left: "455px",
+      top: "265px",
+      backgroundColor: "Gray",
+      fontSize:'20px', 
+      width: "220px",
+      height: "60px"
+    }}
+    onClick={goToFanPage}>
+      For Fans
+    </button>
+    <button style = {{
+      position: "relative",
+      left: "620px",
+      top: "265px",
+      backgroundColor: "Gray",
+      fontSize:'20px', 
+      width: "220px",
+      height: "60px"
+    }}
+    onClick={goToOrganizerPage}>
+      For Organizers
+    </button>
     </div>
+    </>
 );
 
 }
